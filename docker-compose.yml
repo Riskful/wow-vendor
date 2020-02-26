@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  webserver:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8080:80
+    working_dir: /var/www/html
+
+
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wowvendor
+      MYSQL_USER: wowvendor
+      MYSQL_PASSWORD: wowvendor
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./databases:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/var/www/html
+    command: composer install
+    working_dir: /var/www/html

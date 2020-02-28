@@ -81,22 +81,13 @@ class UserRepository
     /**
      * Добавление пользователя.
      *
-     * @param $username
-     * @param $roleId
-     * @return bool
+     * @param string $username
+     * @param int $roleId
      */
     public function add(string $username, int $roleId)
     {
-        try {
-            $db = new Database;
-            $query = $db->getDb()->prepare('INSERT INTO `user`(`username`, `role_id`) VALUES (?, ?)');
-            $query->execute([$username, $roleId]);
-
-            return true;
-        } catch (\Exception $exception) {
-            error_log($exception->getMessage());
-
-            return false;
-        }
+        $db = new Database;
+        $query = $db->getDb()->prepare('INSERT INTO `user`(`username`, `role_id`) VALUES (?, ?)');
+        $query->execute([$username, $roleId]);
     }
 }

@@ -79,6 +79,8 @@ class UserRepository
     }
 
     /**
+     * Добавление пользователя.
+     *
      * @param $username
      * @param $roleId
      * @return bool

@@ -8,9 +8,7 @@
 <body>
 
 <?php require './vendor/autoload.php'; ?>
-
 <?php $c = new \App\Controller\UserController; ?>
-<?php $roles = $c->getRoles(); ?>
 
 <div class="wrapper">
     <div class="wrapper__form">
@@ -19,9 +17,10 @@
             <div class="form__group">
                 <label for="role" class="form__label">Select role</label>
                 <select name="role" id="role" class="form__select">
-                    <?php foreach ($roles as $role): ?>
-                        <option value="<?php echo $role['id']; ?>">
-                            <?php echo $role['rolename']; ?>
+                    <?php /** @var \App\Model\UserRole $role */ ?>
+                    <?php foreach ($c->getRoles() as $role): ?>
+                        <option value="<?php echo $role->getId(); ?>">
+                            <?php echo $role->getRoleName(); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -43,15 +42,12 @@
             </tr>
             </thead>
             <tbody>
+            <?php /** @var \App\Model\User $user */ ?>
             <?php foreach ($c->getUsers() as $user): ?>
                 <tr>
-                    <td><?php echo $user['id']; ?></td>
-                    <td><?php echo $user['username']; ?></td>
-                    <td>
-                        <?php foreach ($roles as $role): ?>
-                            <?php echo ($role['id'] === $user['role_id']) ? $role['rolename'] : ''; ?>
-                        <?php endforeach; ?>
-                    </td>
+                    <td><?php echo $user->getId(); ?></td>
+                    <td><?php echo $user->getUsername(); ?></td>
+                    <td><?php echo $user->getRole()->getRoleName(); ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

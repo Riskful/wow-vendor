@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 /**
  * Class UserRole
  *
@@ -15,7 +17,7 @@ class UserRole
     /**
      * @var string Название роли.
      */
-    private $rolename;
+    private $roleName;
 
     /**
      * UserRole constructor.
@@ -25,7 +27,7 @@ class UserRole
     public function __construct(int $id, string $rolename)
     {
         $this->id = $id;
-        $this->rolename = $rolename;
+        $this->roleName = $rolename;
     }
 
     /**
@@ -39,8 +41,8 @@ class UserRole
     /**
      * @return string
      */
-    public function getRolename(): string
+    public function getRoleName(): string
     {
-        return $this->rolename;
+        return $this->roleName;
     }
 }

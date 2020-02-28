@@ -8,36 +8,24 @@ if(isset($_GET['action'])) {
 
     if($_GET['action'] === 'user-add') {
         if(!empty($_POST['username']) && !empty($_POST['role'])) {
-            $user = new \App\Model\User(
-                0,
+            $c->addUser(
                 $_POST['username'],
                 (int) $_POST['role']
             );
-            $c->addUser($user);
 
             $result = ['request' => true];
         }
     }
 
     if($_GET['action'] === 'user-list') {
-
-        $_users = $c->getUsers();
-        $_roles = $c->getRoles();
-
         $users = [];
-        foreach ($_users as $user) {
-            $newUser = [
-                'id' => $user['id'],
-                'username' => $user['username']
+        /** @var \App\Model\User $user */
+        foreach ($c->getUsers() as $user) {
+            $users[] = [
+                'id' => $user->getId(),
+                'role' => $user->getRole()->getRoleName(),
+                'username' => $user->getUsername()
             ];
-
-            foreach ($_roles as $role) {
-                if($role['id'] === $user['role_id']) {
-                    $newUser['role'] = $role['rolename'];
-                }
-            }
-
-            $users[] = $newUser;
         }
 
         $result = $users;

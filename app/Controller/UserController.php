@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Database;
-use App\Model\User;
+use App\Repository\UserRepository;
+use App\Repository\UserRoleRepository;
 
 /**
  * Class UserController
@@ -13,14 +13,30 @@ use App\Model\User;
 class UserController
 {
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var UserRoleRepository
+     */
+    private $userRoleRepository;
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository;
+        $this->userRoleRepository = new UserRoleRepository;
+    }
+
+    /**
      * @return array
      */
     public function getRoles()
     {
-        $database = new Database;
-        $query = $database->getDb()->query('SELECT * FROM `user_role`');
-
-        return $query->fetchAll();
+        return $this->userRoleRepository->getAll();
     }
 
     /**
@@ -28,20 +44,15 @@ class UserController
      */
     public function getUsers()
     {
-        $database = new Database;
-        $query = $database->getDb()->query('SELECT * FROM `user`');
-
-        return $query->fetchAll();
+        return $this->userRepository->getAll();
     }
 
     /**
-     * @param User $user
+     * @param $username
+     * @param $roleId
      */
-    public function addUser(User $user)
+    public function addUser(string $username, int $roleId)
     {
-        $database = new Database;
-        $query = $database->getDb()->prepare('INSERT INTO `user`(`username`, `role_id`) VALUES (?, ?)');
-
-        $query->execute([$user->getUsername(), $user->getRoleId()]);
+        $this->userRepository->add($username, $roleId);
     }
 }

@@ -20,21 +20,21 @@ class User
     private $username;
 
     /**
-     * @var int Идентификатор роли.
+     * @var UserRole Роль.
      */
-    private $roleId;
+    private $role;
 
     /**
      * User constructor.
      * @param int $id
      * @param string $username
-     * @param int $roleId
+     * @param UserRole $role
      */
-    public function __construct(int $id, string $username, int $roleId)
+    public function __construct(int $id, string $username, UserRole $role)
     {
         $this->id = $id;
         $this->username = $username;
-        $this->roleId = $roleId;
+        $this->role = $role;
     }
 
     /**
@@ -46,11 +46,11 @@ class User
     }
 
     /**
-     * @return int
+     * @return UserRole
      */
-    public function getRoleId(): int
+    public function getRole(): UserRole
     {
-        return $this->roleId;
+        return $this->role;
     }
 
     /**

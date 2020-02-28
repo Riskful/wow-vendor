@@ -39,9 +39,5 @@ formUserAdd.onsubmit = async (e) => {
 
             tableBody.appendChild(tr);
         });
-
-        console.log(userList);
-
-
     }
 };
